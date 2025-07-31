@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Usuarios\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Direcional.Domain\Direcional.Domain.csproj" />
+    <ProjectReference Include="..\Direcional.Infrastructure\Direcional.Infrastructure.csproj" />
+    <ProjectReference Include="..\Direcional.Persistence\Direcional.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
