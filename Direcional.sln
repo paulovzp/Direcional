@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Direcional.Domain.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{CA61EA7D-7987-409B-B1D7-D56BD406C4B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Direcional.Api", "src\Direcional.Api\Direcional.Api.csproj", "{FCF34036-5C7D-4238-9E39-A552AF4AE519}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{DA9E4BB7-01C8-4D2C-A0B5-971BE8F900C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA9E4BB7-01C8-4D2C-A0B5-971BE8F900C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA9E4BB7-01C8-4D2C-A0B5-971BE8F900C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCF34036-5C7D-4238-9E39-A552AF4AE519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCF34036-5C7D-4238-9E39-A552AF4AE519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCF34036-5C7D-4238-9E39-A552AF4AE519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCF34036-5C7D-4238-9E39-A552AF4AE519}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{DCADC98E-7455-4C71-881C-F5BA3B8E77C4} = {5AC1B283-9049-4783-BC13-B7CE5BEBA894}
 		{DA9E4BB7-01C8-4D2C-A0B5-971BE8F900C2} = {DF94B92F-F56C-4C66-A435-C92B4C2486CE}
 		{CA61EA7D-7987-409B-B1D7-D56BD406C4B7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{FCF34036-5C7D-4238-9E39-A552AF4AE519} = {CA61EA7D-7987-409B-B1D7-D56BD406C4B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2CCCBD48-2D29-4ED0-8361-A1C66AC33046}
