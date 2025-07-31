@@ -17,33 +17,37 @@ public class ClienteAppService :
 
     public override Expression<Func<Cliente, bool>> GetFilter(FilterRequest<ClienteFilterRequest> request)
     {
-        return x => true;
+        Expression<Func<Cliente, bool>> expression = x => true;
+        return expression;
     }
 
     public override Expression<Func<Cliente, object>> GetSort(string sortBy)
     {
         return sortBy.ToLower() switch
         {
-            "nome" => func => func.Id,
+            "nome" => func => func.Nome,
+            "email" => func => func.Email,
             _ => func => func.Id,
         };
     }
 
     public override Cliente ToEntity(ClienteCreateRequest request)
-    {
-        return new Cliente();
-    }
+        => Cliente.Create(request.Nome, request.Email, request.Telefone);
 
-    public override Cliente ToEntity(ClienteUpdateRequest request)
+    public override Cliente ToEntity(ClienteUpdateRequest request, Cliente cliente)
     {
-        return new Cliente();
+        cliente.Update(request.Nome, request.Telefone);
+        return cliente;
     }
 
     public override IEnumerable<ClienteReadResponse> ToReadResponse(IEnumerable<Cliente> entities)
     {
         return entities.Select(x => new ClienteReadResponse
         {
-
+            Id = x.Id,
+            Nome = x.Nome,
+            Email = x.Email,
+            Telefone = x.Telefone
         });
     }
 
@@ -51,6 +55,10 @@ public class ClienteAppService :
     {
         return new ClienteResponse
         {
+            Id = entity.Id,
+            Nome = entity.Nome,
+            Email = entity.Email,
+            Telefone = entity.Telefone
         };
     }
 }

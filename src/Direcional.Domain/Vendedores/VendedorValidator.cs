@@ -4,11 +4,11 @@ using FluentValidation;
 
 namespace Direcional.Domain;
 
-public class ClienteValidator : DirecionalValidator<Cliente>, IClienteValidator
+public class VendedorValidator : DirecionalValidator<Vendedor>, IVendedorValidator
 {
-    private readonly IClienteRepository _repository;
+    private readonly IVendedorRepository _repository;
 
-    public ClienteValidator(IClienteRepository repository)
+    public VendedorValidator(IVendedorRepository repository)
     {
         _repository = repository;
     }
@@ -23,7 +23,7 @@ public class ClienteValidator : DirecionalValidator<Cliente>, IClienteValidator
     public override void DeleteRules()
     {
         Id();
-        ComprouApartamento();
+        VendeuApartamento();
         ReservouAparamento();
     }
 
@@ -44,9 +44,9 @@ public class ClienteValidator : DirecionalValidator<Cliente>, IClienteValidator
     {
         RuleFor(x => x.Email)
             .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage(MensagemValidacao.Cliente.EmailRequired)
-            .NotNull().WithMessage(MensagemValidacao.Cliente.EmailRequired)
-            .MaximumLength(Cliente.PropertyLength.Email).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Email", Cliente.PropertyLength.Email))
+            .NotEmpty().WithMessage(MensagemValidacao.Vendedor.EmailRequired)
+            .NotNull().WithMessage(MensagemValidacao.Vendedor.EmailRequired)
+            .MaximumLength(Vendedor.PropertyLength.Email).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Email", Vendedor.PropertyLength.Email))
             .Must(email => EmailValidator.IsValid(email!)).WithMessage(MensagemValidacao.EmailInvalid)
             .MustAsync(async (cliente, email, cancellation) =>
             {
@@ -59,28 +59,28 @@ public class ClienteValidator : DirecionalValidator<Cliente>, IClienteValidator
     {
         RuleFor(x => x.Nome)
             .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage(MensagemValidacao.Cliente.NomeRequired)
-            .NotNull().WithMessage(MensagemValidacao.Cliente.NomeRequired)
-            .MaximumLength(Cliente.PropertyLength.Nome).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Nome", Cliente.PropertyLength.Nome));
+            .NotEmpty().WithMessage(MensagemValidacao.Vendedor.NomeRequired)
+            .NotNull().WithMessage(MensagemValidacao.Vendedor.NomeRequired)
+            .MaximumLength(Vendedor.PropertyLength.Nome).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Nome", Vendedor.PropertyLength.Nome));
     }
 
     private void Telefone()
     {
         RuleFor(x => x.Telefone)
             .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage(MensagemValidacao.Cliente.TelefoneRequired)
-            .NotNull().WithMessage(MensagemValidacao.Cliente.TelefoneRequired)
-            .MaximumLength(Cliente.PropertyLength.Telefone).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Telefone", Cliente.PropertyLength.Telefone));
+            .NotEmpty().WithMessage(MensagemValidacao.Vendedor.TelefoneRequired)
+            .NotNull().WithMessage(MensagemValidacao.Vendedor.TelefoneRequired)
+            .MaximumLength(Vendedor.PropertyLength.Telefone).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Telefone", Vendedor.PropertyLength.Telefone));
     }
 
-    private void ComprouApartamento()
+    private void VendeuApartamento()
     {
         RuleFor(cliente => cliente)
             .MustAsync(async (cliente, cancellation) =>
             {
                 var existe = await _repository.Exists(x => x.Id == cliente.Id && x.Vendas.Any());
                 return !existe;
-            }).WithMessage(MensagemValidacao.Cliente.NaoPodeSerExcluido);
+            }).WithMessage(MensagemValidacao.Vendedor.NaoPodeSerExcluido);
     }
 
     private void ReservouAparamento()
@@ -90,6 +90,6 @@ public class ClienteValidator : DirecionalValidator<Cliente>, IClienteValidator
             {
                 var existe = await _repository.Exists(x => x.Id == cliente.Id && x.Reservas.Any());
                 return !existe;
-            }).WithMessage(MensagemValidacao.Cliente.NaoPodeSerExcluido);
+            }).WithMessage(MensagemValidacao.Vendedor.NaoPodeSerExcluido);
     }
 }

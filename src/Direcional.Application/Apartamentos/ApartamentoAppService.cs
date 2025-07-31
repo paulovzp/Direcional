@@ -9,41 +9,51 @@ public class ApartamentoAppService :
     , IApartamentoAppService
 {
     public ApartamentoAppService(IApartamentoService service,
-        IApartamentoRepository repository, 
-        IDirecionalUnitOfWork unitOfWork) 
+        IApartamentoRepository repository,
+        IDirecionalUnitOfWork unitOfWork)
         : base(service, repository, unitOfWork)
     {
     }
 
     public override Expression<Func<Apartamento, bool>> GetFilter(FilterRequest<ApartamentoFilterRequest> request)
     {
-        return x => true; 
+        return x => true;
     }
 
     public override Expression<Func<Apartamento, object>> GetSort(string sortBy)
     {
         return sortBy.ToLower() switch
         {
-            "nome" => func => func.Id,
+            "andar" => func => func.Andar,
+            "numero" => func => func.Numero,
             _ => func => func.Id,
         };
     }
 
     public override Apartamento ToEntity(ApartamentoCreateRequest request)
     {
-        return new Apartamento();
+        return new Apartamento()
+        {
+            Numero = request.Numero,
+            Andar = request.Andar,
+            ValorVenda = request.ValorVenda
+        };
     }
 
-    public override Apartamento ToEntity(ApartamentoUpdateRequest request)
+    public override Apartamento ToEntity(ApartamentoUpdateRequest request, Apartamento apartamento)
     {
-        return new Apartamento();
+        apartamento.ValorVenda = request.ValorVenda;
+        return apartamento;
     }
 
     public override IEnumerable<ApartamentoReadResponse> ToReadResponse(IEnumerable<Apartamento> entities)
     {
         return entities.Select(x => new ApartamentoReadResponse
         {
-
+            Numero = x.Numero,
+            Andar = x.Andar,
+            Id = x.Id,
+            ValorVenda = x.ValorVenda
         });
     }
 
@@ -51,6 +61,10 @@ public class ApartamentoAppService :
     {
         return new ApartamentoResponse
         {
+            Numero = entity.Numero,
+            Andar = entity.Andar,
+            Id = entity.Id,
+            ValorVenda = entity.ValorVenda
         };
     }
 }

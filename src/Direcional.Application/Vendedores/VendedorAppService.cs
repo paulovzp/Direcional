@@ -24,26 +24,34 @@ public class VendedorAppService :
     {
         return sortBy.ToLower() switch
         {
-            "nome" => func => func.Id,
+            "nome" => func => func.Nome,
+            "telefone" => func => func.Telefone,
+            "email" => func => func.Email,
+            "codigo" => func => func.Codigo,
             _ => func => func.Id,
         };
     }
 
     public override Vendedor ToEntity(VendedorCreateRequest request)
-    {
-        return new Vendedor();
-    }
+        => Vendedor.Create(request.Nome, request.Email, request.Telefone);
 
-    public override Vendedor ToEntity(VendedorUpdateRequest request)
+    public override Vendedor ToEntity(VendedorUpdateRequest request, Vendedor vendedor)
     {
-        return new Vendedor();
+        vendedor.Update(request.Nome, request.Telefone);
+        return vendedor;
     }
 
     public override IEnumerable<VendedorReadResponse> ToReadResponse(IEnumerable<Vendedor> entities)
     {
         return entities.Select(x => new VendedorReadResponse
         {
-
+            Telefone = x.Telefone,
+            Nome = x.Nome,
+            Codigo = x.Codigo,
+            Email = x.Email,
+            DataInicio = x.DataInicio,
+            DataFim = x.DataFim,
+            Id = x.Id
         });
     }
 
@@ -51,6 +59,13 @@ public class VendedorAppService :
     {
         return new VendedorResponse
         {
+            Telefone = entity.Telefone,
+            Nome = entity.Nome,
+            Codigo = entity.Codigo,
+            Email = entity.Email,
+            DataInicio = entity.DataInicio,
+            DataFim = entity.DataFim,
+            Id = entity.Id
         };
     }
 }

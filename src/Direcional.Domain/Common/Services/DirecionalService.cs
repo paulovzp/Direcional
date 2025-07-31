@@ -17,7 +17,7 @@ public class DirecionalService<T> : IDirecionalService<T>
         _validator = validator;
     }
 
-    public async Task<T> Add(T entity)
+    public virtual async Task<T> Add(T entity)
     {
         var validtor = await _validator
             .ValidateAsync(entity, op => op.IncludeRuleSets(ValidationRules.CreateRule));
@@ -29,7 +29,7 @@ public class DirecionalService<T> : IDirecionalService<T>
         return entity;
     }
 
-    public async Task Update(T entity)
+    public virtual async Task Update(T entity)
     {
         var validtor = await _validator
                 .ValidateAsync(entity, op => op.IncludeRuleSets(ValidationRules.UpdateRule));

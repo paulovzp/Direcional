@@ -1,5 +1,6 @@
 ﻿using Direcional.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Direcional.Persistence;
 
@@ -12,6 +13,7 @@ public class DirecionalDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DirecionalDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
 
@@ -32,5 +34,16 @@ public class DirecionalDbContext : DbContext
             }
         }
         return await base.SaveChangesAsync(cancellationToken);
+    }
+}
+
+public class DirecionalDbContextFactory : IDesignTimeDbContextFactory<DirecionalDbContext>
+{
+    public DirecionalDbContext CreateDbContext(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<DirecionalDbContext>();
+        optionsBuilder.UseSqlServer("Server=localhost;Database=DirecionalDB;User=sa;Password=d1r3c10nalDBp@ssw0rd;TrustServerCertificate=true;");
+
+        return new DirecionalDbContext(optionsBuilder.Options);
     }
 }

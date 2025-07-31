@@ -34,9 +34,9 @@ public class ReservaAppService :
         return new Reserva();
     }
 
-    public override Reserva ToEntity(ReservaUpdateRequest request)
+    public override Reserva ToEntity(ReservaUpdateRequest request, Reserva reserva)
     {
-        return new Reserva();
+        return reserva;
     }
 
     public override IEnumerable<ReservaReadResponse> ToReadResponse(IEnumerable<Reserva> entities)

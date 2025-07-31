@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Direcional.Domain\Direcional.Domain.csproj" />
-    <ProjectReference Include="..\Direcional.Infrastructure\Direcional.Infrastructure.csproj" />
     <ProjectReference Include="..\Direcional.Persistence\Direcional.Persistence.csproj" />
   </ItemGroup>
 

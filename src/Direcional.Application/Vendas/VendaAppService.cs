@@ -34,9 +34,9 @@ public class VendaAppService :
         return new Venda();
     }
 
-    public override Venda ToEntity(VendaUpdateRequest request)
+    public override Venda ToEntity(VendaUpdateRequest request, Venda reserva)
     {
-        return new Venda();
+        return reserva;
     }
 
     public override IEnumerable<VendaReadResponse> ToReadResponse(IEnumerable<Venda> entities)

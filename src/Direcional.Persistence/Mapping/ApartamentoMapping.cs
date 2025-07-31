@@ -11,7 +11,11 @@ public class ApartamentoMapping : IEntityTypeConfiguration<Apartamento>
         builder.ToTable("Apartamentos");
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Numero)
+           .IsRequired();
 
+        builder.Property(x => x.Andar)
+           .IsRequired();
 
         builder.Property(x => x.CreatedAt)
             .IsRequired();

@@ -7,26 +7,3 @@ public class ApartamentoService : DirecionalService<Apartamento>, IApartamentoSe
     {
     }
 }
-
-
-public class ApartamentoValidator : DirecionalValidator<Apartamento>, IApartamentoValidator
-{
-    public ApartamentoValidator()
-    {
-    }
-
-    public override void CreateRules()
-    {
-        
-    }
-
-    public override void DeleteRules()
-    {
-        
-    }
-
-    public override void UpdateRules()
-    {
-        
-    }
-}

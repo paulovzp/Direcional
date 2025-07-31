@@ -2,30 +2,26 @@
 
 public class VendedorService : DirecionalService<Vendedor>, IVendedorService
 {
-    public VendedorService(IVendedorRepository repository, IVendedorValidator validator)
+    private readonly IUsuarioService _usuarioService;
+
+    public VendedorService(IVendedorRepository repository, 
+        IVendedorValidator validator,
+        IUsuarioService usuarioService)
         : base(repository, validator)
     {
-    }
-}
-
-public class VendedorValidator : DirecionalValidator<Vendedor>, IVendedorValidator
-{
-    public VendedorValidator()
-    {
+        _usuarioService = usuarioService;
     }
 
-    public override void CreateRules()
+    public override async Task<Vendedor> Add(Vendedor entity)
     {
-
+        var cliente = await base.Add(entity);
+        await _usuarioService.Add(entity.Usuario);
+        return cliente;
     }
 
-    public override void DeleteRules()
+    public override async Task Update(Vendedor entity)
     {
-
-    }
-
-    public override void UpdateRules()
-    {
-
+        await base.Update(entity);
+        await _usuarioService.Add(entity.Usuario);
     }
 }

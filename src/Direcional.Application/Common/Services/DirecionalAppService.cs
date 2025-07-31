@@ -56,7 +56,7 @@ public abstract class DirecionalAppService<TEntity, TReponse, TReadResponse, TCr
     public virtual async Task Update(int id, TUpdateRequest request)
     {
         TEntity entity = await ReadEntity(id);
-        entity = ToEntity(request);
+        entity = ToEntity(request, entity);
         await _service.Update(entity);
         await _unitOfWork.CommitAsync();
     }
@@ -72,7 +72,7 @@ public abstract class DirecionalAppService<TEntity, TReponse, TReadResponse, TCr
     public abstract Expression<Func<TEntity, bool>> GetFilter(FilterRequest<TFilterRequest> request);
     public abstract Expression<Func<TEntity, object>> GetSort(string sortBy);
     public abstract TEntity ToEntity(TCreateRequest request);
-    public abstract TEntity ToEntity(TUpdateRequest request);
+    public abstract TEntity ToEntity(TUpdateRequest request, TEntity entity);
     public abstract IEnumerable<TReadResponse> ToReadResponse(IEnumerable<TEntity> entities);
     public abstract TReponse ToResponse(TEntity entity);
 }

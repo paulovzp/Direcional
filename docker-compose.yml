@@ -1,0 +1,23 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - SA_PASSWORD=d1r3c10nalDBp@ssw0rd
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+    restart: always
+
+  direcional.api:
+    image: ${DOCKER_REGISTRY-}direcionalapi
+    build:
+      context: .
+      dockerfile: src/Direcional.Api/Dockerfile
+    depends_on:
+      - sqlserver
+
+volumes:
+  sqlserverdata:
