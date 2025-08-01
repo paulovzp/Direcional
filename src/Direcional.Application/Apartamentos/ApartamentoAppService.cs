@@ -8,6 +8,7 @@ public class ApartamentoAppService :
     DirecionalAppService<Apartamento, ApartamentoResponse, ApartamentoReadResponse, ApartamentoCreateRequest, ApartamentoUpdateRequest, ApartamentoFilterRequest>
     , IApartamentoAppService
 {
+    private IApartamentoService _apartamentoService => (IApartamentoService)_service;
     public ApartamentoAppService(IApartamentoService service,
         IApartamentoRepository repository,
         IDirecionalUnitOfWork unitOfWork)
@@ -44,6 +45,15 @@ public class ApartamentoAppService :
     {
         apartamento.ValorVenda = request.ValorVenda;
         return apartamento;
+    }
+
+    public async Task<ApartamentoDisponivel> Disponivel(int apartamentoId)
+    {
+        var apartamento = await ReadEntity(apartamentoId);
+        var disponivel = await _apartamentoService.Disponivel(apartamento.Id);
+        string baseMessage = $"Apartamento {apartamento.Numero} no andar {apartamento.Andar}";
+        string message = disponivel ? $"{baseMessage} disponível." : $"{baseMessage} não disponível.";
+        return new ApartamentoDisponivel(message);
     }
 
     public override IEnumerable<ApartamentoReadResponse> ToReadResponse(IEnumerable<Apartamento> entities)

@@ -4,9 +4,10 @@ public static class EndpointExtensions
 {
     public static void MapEndpoints(this WebApplication app)
     {
-        app.MapVendedorEndpoints();
+        app.MapCorretorEndpoints();
         app.MapClienteEndpoints();
         app.MapReservaEndpoints();
         app.MapApartamentoEndpoints();
+        app.MapVendaEndpoints();
     }
 }

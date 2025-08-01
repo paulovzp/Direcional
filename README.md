@@ -1,1 +1,46 @@
-# Direcional
+﻿# 🏢 Direcional - Teste Técnico
+
+Sistema desenvolvido para o processo seletivo da vaga de Analista / Desenvolvedor Sênior no Grupo Direcional.  
+A aplicação consiste em uma API RESTful desenvolvida em .NET 9 para gerenciar clientes, apartamentos, vendas e reservas.
+
+---
+
+## 📌 Tecnologias Utilizadas
+
+- [.NET 9](https://dotnet.microsoft.com/en-us/)
+- [Entity Framework Core](https://learn.microsoft.com/en-us/ef/)
+- [SQL Server Express (Docker)](https://hub.docker.com/_/microsoft-mssql-server)
+- [JWT Authentication](https://jwt.io/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Swagger (OpenAPI)](https://swagger.io/)
+
+---
+
+## 🚀 Como Executar o Projeto
+
+1. **Clone o repositório**
+
+```bash
+git clone https://github.com/seu-usuario/direcional.git
+cd direcional
+
+2. **Execute com Docker Compose para criar apenas o banco**
+
+```bash
+docker-compose up -d sqlserver
+
+3. **Execute o migration**
+
+```bash
+cd src/Direcional.Persistence
+dotnet ef database update --project Direcional.Persistence.csproj
+
+4. **Execute a API**
+```bash
+cd src/Direcional.Api
+dotnet run
+
+4. **Acesse a API via Swagger**
+```bash
+http://localhost:44330/swagger

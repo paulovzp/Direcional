@@ -11,6 +11,10 @@ public class ApartamentoMapping : IEntityTypeConfiguration<Apartamento>
         builder.ToTable("Apartamentos");
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Nome)
+           .HasMaxLength(Apartamento.PropertyLength.Nome)
+           .IsRequired();
+
         builder.Property(x => x.Numero)
            .IsRequired();
 

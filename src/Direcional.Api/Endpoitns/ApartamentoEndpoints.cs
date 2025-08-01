@@ -40,6 +40,20 @@ public static class ApartamentoEndpoints
             ;
 
         app.MapGroup("api/apartamento")
+            .MapGet("{id}/disponivel", async ([FromRoute] int id, IApartamentoAppService appService) =>
+            {
+                var response = await appService.Disponivel(id);
+                return Results.Ok(response);
+            })
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithTags("Apartamento")
+            //.RequireAuthorization()
+            ;
+
+        app.MapGroup("api/apartamento")
             .MapPost("", async ([FromBody] ApartamentoCreateRequest request, IApartamentoAppService appService) =>
             {
                 var id = await appService.Add(request);
@@ -59,7 +73,7 @@ public static class ApartamentoEndpoints
                 await appService.Update(id, request);
                 return Results.NoContent();
             })
-            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
@@ -74,7 +88,7 @@ public static class ApartamentoEndpoints
                 await appService.Delete(id);
                 return Results.NoContent();
             })
-            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)

@@ -15,7 +15,7 @@ public class ReservaRepository : DirecionalRepository<Reserva>, IReservaReposito
     {
         return _dbSet
             .Include(x => x.Apartamento)
-            .Include(x => x.Vendedor)
+            .Include(x => x.Corretor)
             .Include(x => x.Cliente);
     }
 }

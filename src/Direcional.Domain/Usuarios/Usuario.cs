@@ -12,7 +12,7 @@ public class Usuario : DirecionalEntity
     public string HashPassword { get; set; } = string.Empty;
     public string Salt { get; set; } = string.Empty;
     public TipoUsuario Tipo { get; set; } = TipoUsuario.Admin;
-    public Vendedor Vendedor { get; set; }
+    public Corretor Corretor { get; set; }
     public Cliente Cliente { get; set; }
 
     public void SetPassword(string password)

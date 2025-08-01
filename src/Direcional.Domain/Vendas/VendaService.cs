@@ -1,31 +1,31 @@
-﻿namespace Direcional.Domain;
+﻿using Direcional.Infrastructure.Constants;
+using Direcional.Infrastructure.Exceptions;
+
+namespace Direcional.Domain;
 
 public class VendaService : DirecionalService<Venda>, IVendaService
 {
-    public VendaService(IVendaRepository repository, IVendaValidator validator)
+    private readonly IApartamentoRepository _apartamentoRepository;
+    private readonly IApartamentoService _apartamentoService;
+
+    public VendaService(IVendaRepository repository, 
+        IVendaValidator validator,
+        IApartamentoRepository apartamentoRepository,
+        IApartamentoService apartamentoService)
         : base(repository, validator)
     {
-    }
-}
-
-public class VendaValidator : DirecionalValidator<Venda>, IVendaValidator
-{
-    public VendaValidator()
-    {
+        _apartamentoRepository = apartamentoRepository;
+        _apartamentoService = apartamentoService;
     }
 
-    public override void CreateRules()
+    public async Task Efetuar(Reserva reserva, decimal valorEntrada)
     {
+        if(valorEntrada <= 0)
+            throw new DirecionalDomainException(MensagemValidacao.Venda.ValorEntradaMenorZero);
 
-    }
-
-    public override void DeleteRules()
-    {
-
-    }
-
-    public override void UpdateRules()
-    {
-
+        var apartamento = await _apartamentoRepository.Get(reserva.ApartamentoId);
+        var venda = Venda.Create(reserva.ClienteId, reserva.ApartamentoId, apartamento!.ValorVenda, valorEntrada, reserva.CorretorId);
+        await Add(venda);
+        await _apartamentoService.MarcarVendido(apartamento!);
     }
 }

@@ -24,9 +24,9 @@ public class VendaMapping : IEntityTypeConfiguration<Venda>
             .HasForeignKey(x => x.ApartamentoId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasOne(x => x.Vendedor)
+        builder.HasOne(x => x.Corretor)
             .WithMany(x => x.Vendas)
-            .HasForeignKey(x => x.VendedorId)
+            .HasForeignKey(x => x.CorretorId)
             .OnDelete(DeleteBehavior.NoAction);
 
 

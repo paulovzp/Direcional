@@ -1,5 +1,7 @@
 ﻿namespace Direcional.Application;
 
+public record ApartamentoDisponivel(string Message);
+
 public class ApartamentoResponse
 {
     public int Id { get; set; }

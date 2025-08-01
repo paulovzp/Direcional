@@ -27,9 +27,9 @@ public class ReservaMapping : IEntityTypeConfiguration<Reserva>
             .HasForeignKey(x => x.ApartamentoId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasOne(x => x.Vendedor)
+        builder.HasOne(x => x.Corretor)
             .WithMany(x => x.Reservas)
-            .HasForeignKey(x => x.VendedorId)
+            .HasForeignKey(x => x.CorretorId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder.Property(x => x.Status)

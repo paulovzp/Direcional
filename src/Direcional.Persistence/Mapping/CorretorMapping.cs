@@ -4,23 +4,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Direcional.Persistence;
 
-public class VendedorMapping : IEntityTypeConfiguration<Vendedor>
+public class CorretorMapping : IEntityTypeConfiguration<Corretor>
 {
-    public void Configure(EntityTypeBuilder<Vendedor> builder)
+    public void Configure(EntityTypeBuilder<Corretor> builder)
     {
-        builder.ToTable("Vendedores");
+        builder.ToTable("Corretores");
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Email)
-           .HasMaxLength(Vendedor.PropertyLength.Email)
+           .HasMaxLength(Corretor.PropertyLength.Email)
            .IsRequired();
 
         builder.Property(x => x.Telefone)
-           .HasMaxLength(Vendedor.PropertyLength.Telefone)
+           .HasMaxLength(Corretor.PropertyLength.Telefone)
            .IsRequired();
 
         builder.Property(x => x.Nome)
-           .HasMaxLength(Vendedor.PropertyLength.Nome)
+           .HasMaxLength(Corretor.PropertyLength.Nome)
            .IsRequired();
 
         builder.Property(x => x.DataFim)
@@ -30,12 +30,12 @@ public class VendedorMapping : IEntityTypeConfiguration<Vendedor>
            .IsRequired();
 
         builder.Property(x => x.Codigo)
-           .HasMaxLength(Vendedor.PropertyLength.Codigo)
+           .HasMaxLength(Corretor.PropertyLength.Codigo)
            .IsRequired();
 
         builder.HasOne(x => x.Usuario)
-            .WithOne(x => x.Vendedor)
-            .HasForeignKey<Vendedor>(x => x.UsuarioId);
+            .WithOne(x => x.Corretor)
+            .HasForeignKey<Corretor>(x => x.UsuarioId);
 
 
         builder.Property(x => x.CreatedAt)

@@ -1,34 +1,27 @@
 ﻿using Direcional.Infrastructure.Constants;
-using Direcional.Infrastructure.Enums;
 using FluentValidation;
 
 namespace Direcional.Domain;
 
 public class ReservaValidator : DirecionalValidator<Reserva>, IReservaValidator
 {
-    private readonly IReservaRepository _reservaRepository;
     private readonly IClienteRepository _clienteRepository;
-    private readonly IVendedorRepository _vendedorRepository;
-    private readonly IApartamentoRepository _apartamentoRepository;
-    private readonly IVendaRepository _vendaRepository;
+    private readonly ICorretorRepository _corretorRepository;
+    private readonly IApartamentoService _apartamentoService;
 
-    public ReservaValidator(IReservaRepository reservaRepository,
-        IClienteRepository clienteRepository,
-        IVendedorRepository vendedorRepository,
-        IApartamentoRepository apartamentoRepository,
-        IVendaRepository vendaRepository)
+    public ReservaValidator(IClienteRepository clienteRepository,
+        ICorretorRepository corretorRepository,
+        IApartamentoService apartamentoService)
     {
-        _reservaRepository = reservaRepository;
         _clienteRepository = clienteRepository;
-        _vendedorRepository = vendedorRepository;
-        _apartamentoRepository = apartamentoRepository;
-        _vendaRepository = vendaRepository;
+        _corretorRepository = corretorRepository;
+        _apartamentoService = apartamentoService;
     }
 
     public override void CreateRules()
     {
         Cliente();
-        Vendedor();
+        Corretor();
         Apartamento();
         ApartamentoNaoReservadoOuVendido();
     }
@@ -39,17 +32,15 @@ public class ReservaValidator : DirecionalValidator<Reserva>, IReservaValidator
 
     private void ApartamentoNaoReservadoOuVendido()
     {
-        RuleFor(apto=> apto)
+        RuleFor(apto => apto)
             .Cascade(CascadeMode.Stop)
             .MustAsync(async (reserva, cancellationToken) =>
             {
-                var isVendido = await _vendaRepository.Exists(x => x.ApartamentoId == reserva.ApartamentoId);
-                return !isVendido;
+                return !await _apartamentoService.Vendido(reserva.ApartamentoId);
             }).WithMessage(MensagemValidacao.Reserva.Vendido)
             .MustAsync(async (reserva, cancellationToken) =>
             {
-                var isReservado = await _reservaRepository.Exists(x => x.ApartamentoId == reserva.ApartamentoId && x.Status != ReservaStatus.Cancelada && x.Status != ReservaStatus.Expirada);
-                return !isReservado;
+                return !await _apartamentoService.Reservado(reserva.ApartamentoId);
             }).WithMessage(MensagemValidacao.Reserva.Reservado);
     }
 
@@ -61,20 +52,20 @@ public class ReservaValidator : DirecionalValidator<Reserva>, IReservaValidator
             .WithMessage(MensagemValidacao.Reserva.ApartamentoRequired)
             .MustAsync(async (reserva, id, cancellationToken) =>
             {
-                return await _vendedorRepository.Exists(x => x.Id == id);
+                return await _apartamentoService.Exists(id);
             }).WithMessage(MensagemValidacao.Apartamento.NotFound);
     }
 
-    private void Vendedor()
+    private void Corretor()
     {
-        RuleFor(x => x.VendedorId)
+        RuleFor(x => x.CorretorId)
             .Cascade(CascadeMode.Stop)
             .NotEqual(0)
             .WithMessage(MensagemValidacao.Reserva.ApartamentoRequired)
             .MustAsync(async (reserva, id, cancellationToken) =>
             {
-                return await _vendedorRepository.Exists(x => x.Id == id);
-            }).WithMessage(MensagemValidacao.Vendedor.NotFound);
+                return await _corretorRepository.Exists(x => x.Id == id);
+            }).WithMessage(MensagemValidacao.Corretor.NotFound);
     }
 
     private void Cliente()
@@ -85,7 +76,7 @@ public class ReservaValidator : DirecionalValidator<Reserva>, IReservaValidator
             .WithMessage(MensagemValidacao.Reserva.ApartamentoRequired)
             .MustAsync(async (reserva, id, cancellationToken) =>
             {
-                return await _vendedorRepository.Exists(x => x.Id == id);
+                return await _clienteRepository.Exists(x => x.Id == id);
             }).WithMessage(MensagemValidacao.Cliente.NotFound);
     }
 }

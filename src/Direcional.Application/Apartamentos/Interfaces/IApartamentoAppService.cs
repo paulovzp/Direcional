@@ -6,4 +6,5 @@ namespace Direcional.Application;
 public interface IApartamentoAppService :
     IDirecionalAppService<ApartamentoResponse, ApartamentoReadResponse, ApartamentoCreateRequest, ApartamentoUpdateRequest, ApartamentoFilterRequest>
 {
+    Task<ApartamentoDisponivel> Disponivel(int apartamentoId);
 }

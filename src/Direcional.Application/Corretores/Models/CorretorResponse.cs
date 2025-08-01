@@ -1,6 +1,6 @@
 ﻿namespace Direcional.Application;
 
-public class VendedorResponse
+public class CorretorResponse
 {
     public int Id { get; set; }
     public string Codigo { get; set; } = string.Empty;
@@ -11,7 +11,7 @@ public class VendedorResponse
     public DateTime? DataFim { get; set; }
 }
 
-public class VendedorReadResponse
+public class CorretorReadResponse
 {
     public int Id { get; set; }
     public string Codigo { get; set; } = string.Empty;
@@ -22,20 +22,20 @@ public class VendedorReadResponse
     public DateTime? DataFim { get; set; }
 }
 
-public class VendedorCreateRequest
+public class CorretorCreateRequest
 {
     public string Email { get; set; } = string.Empty;
     public string Telefone { get; set; } = string.Empty;
     public string Nome { get; set; } = string.Empty;
 }
 
-public class VendedorUpdateRequest
+public class CorretorUpdateRequest
 {
     public string Telefone { get; set; } = string.Empty;
     public string Nome { get; set; } = string.Empty;
 }
 
-public class VendedorFilterRequest
+public class CorretorFilterRequest
 {
     public string Nome { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;

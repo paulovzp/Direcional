@@ -26,7 +26,7 @@ public class ReservaAppService :
         return sortBy.ToLower() switch
         {
             "clientenome" => func => func.Cliente.Nome,
-            "vendedorNome" => func => func.Vendedor.Nome,
+            "corretorNome" => func => func.Corretor.Nome,
             "data" => func => func.DataReserva,
             _ => func => func.Id,
         };
@@ -41,9 +41,9 @@ public class ReservaAppService :
 
     public override Reserva ToEntity(ReservaCreateRequest request)
     {
-        //TO DO: Buscar da sessão do vendedor logado
-        var vendedorId = 1;
-        return Reserva.Create(request.ClienteId, request.ApartamentoId, vendedorId);
+        //TO DO: Buscar da sessão do corretor logado
+        var corretorId = 1;
+        return Reserva.Create(request.ClienteId, request.ApartamentoId, corretorId);
     }
 
     public override Reserva ToEntity(ReservaUpdateRequest request, Reserva reserva)
@@ -60,8 +60,8 @@ public class ReservaAppService :
             Id = x.Id,
             ClienteId = x.ClienteId,
             ClienteNome = x.Cliente.Nome,
-            VendedorId = x.VendedorId,
-            VendedorNome = x.Vendedor.Nome,
+            CorretorId = x.CorretorId,
+            CorretorNome = x.Corretor.Nome,
             ApartamentoId = x.ApartamentoId,
             ApartamentoAndar = x.Apartamento.Andar,
             ApartamentoNumero = x.Apartamento.Numero,
@@ -78,8 +78,8 @@ public class ReservaAppService :
             Id = entity.Id,
             ClienteId = entity.ClienteId,
             ClienteNome = entity.Cliente.Nome,
-            VendedorId = entity.VendedorId,
-            VendedorNome = entity.Vendedor.Nome,
+            CorretorId = entity.CorretorId,
+            CorretorNome = entity.Corretor.Nome,
             ApartamentoId = entity.ApartamentoId,
             ApartamentoAndar = entity.Apartamento.Andar,
             ApartamentoNumero = entity.Apartamento.Numero,

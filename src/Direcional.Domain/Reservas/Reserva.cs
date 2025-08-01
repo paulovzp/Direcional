@@ -8,8 +8,8 @@ public class Reserva : DirecionalEntity
     public Cliente Cliente { get; private set; }
     public int ApartamentoId { get; private set; }
     public Apartamento Apartamento { get; private set; }
-    public int VendedorId { get; private set; }
-    public Vendedor Vendedor { get; private set; }
+    public int CorretorId { get; private set; }
+    public Corretor Corretor { get; private set; }
     public ReservaStatus Status { get; private set; } = ReservaStatus.Pendente;
     public DateTime DataReserva { get; private set; } = DateTime.Now;
     public DateTime? DataStatusAlterado { get; private set; } = DateTime.Now;
@@ -20,13 +20,13 @@ public class Reserva : DirecionalEntity
         DataStatusAlterado = DateTime.Now;
     }
 
-    public static Reserva Create(int clienteId, int apartamentoId, int vendedorId)
+    public static Reserva Create(int clienteId, int apartamentoId, int corretorId)
     {
         return new Reserva
         {
             ClienteId = clienteId,
             ApartamentoId = apartamentoId,
-            VendedorId = vendedorId,
+            CorretorId = corretorId,
         };
     }
 }

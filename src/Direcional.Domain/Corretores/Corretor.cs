@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Direcional.Domain;
 
-public class Vendedor : DirecionalEntity
+public class Corretor : DirecionalEntity
 {
     public string Codigo { get; set; } = string.Empty;
     public string Nome { get; set; } = string.Empty;
@@ -34,9 +34,9 @@ public class Vendedor : DirecionalEntity
             Usuario.Nome = nome;
     }
 
-    public static Vendedor Create(string nome, string email, string telefone)
+    public static Corretor Create(string nome, string email, string telefone)
     {
-        return new Vendedor
+        return new Corretor
         {
             Codigo = GenerateCode(),
             Nome = nome,
@@ -47,7 +47,7 @@ public class Vendedor : DirecionalEntity
             {
                 Nome = nome,
                 Email = email,
-                Tipo = TipoUsuario.Vendedor,
+                Tipo = TipoUsuario.Corretor,
             }
         };
     }

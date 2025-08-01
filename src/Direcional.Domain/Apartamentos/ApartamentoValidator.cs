@@ -15,6 +15,7 @@ public class ApartamentoValidator : DirecionalValidator<Apartamento>, IApartamen
 
     public override void CreateRules()
     {
+        Nome();
         Andar();
         Numero();
         ValorVenda();
@@ -28,10 +29,20 @@ public class ApartamentoValidator : DirecionalValidator<Apartamento>, IApartamen
 
     public override void UpdateRules()
     {
+        Nome();
         Andar();
         Numero();
         ValorVenda();
         AptoAndarNumeroUnique();
+    }
+
+    private void Nome()
+    {
+        RuleFor(x => x.Nome)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty().WithMessage(MensagemValidacao.Apartamento.NomeRequired)
+            .NotNull().WithMessage(MensagemValidacao.Apartamento.NomeRequired)
+            .MaximumLength(Apartamento.PropertyLength.Nome).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Nome", Apartamento.PropertyLength.Nome));
     }
 
     private void ApartamentoJaExisteMovimentos()

@@ -4,23 +4,23 @@ using System.Linq.Expressions;
 
 namespace Direcional.Application;
 
-public class VendedorAppService :
-    DirecionalAppService<Vendedor, VendedorResponse, VendedorReadResponse, VendedorCreateRequest, VendedorUpdateRequest, VendedorFilterRequest>
-    , IVendedorAppService
+public class CorretorAppService :
+    DirecionalAppService<Corretor, CorretorResponse, CorretorReadResponse, CorretorCreateRequest, CorretorUpdateRequest, CorretorFilterRequest>
+    , ICorretorAppService
 {
-    public VendedorAppService(IVendedorService service,
-        IVendedorRepository repository,
+    public CorretorAppService(ICorretorService service,
+        ICorretorRepository repository,
         IDirecionalUnitOfWork unitOfWork)
         : base(service, repository, unitOfWork)
     {
     }
 
-    public override Expression<Func<Vendedor, bool>> GetFilter(FilterRequest<VendedorFilterRequest> request)
+    public override Expression<Func<Corretor, bool>> GetFilter(FilterRequest<CorretorFilterRequest> request)
     {
         return x => true;
     }
 
-    public override Expression<Func<Vendedor, object>> GetSort(string sortBy)
+    public override Expression<Func<Corretor, object>> GetSort(string sortBy)
     {
         return sortBy.ToLower() switch
         {
@@ -32,18 +32,18 @@ public class VendedorAppService :
         };
     }
 
-    public override Vendedor ToEntity(VendedorCreateRequest request)
-        => Vendedor.Create(request.Nome, request.Email, request.Telefone);
+    public override Corretor ToEntity(CorretorCreateRequest request)
+        => Corretor.Create(request.Nome, request.Email, request.Telefone);
 
-    public override Vendedor ToEntity(VendedorUpdateRequest request, Vendedor vendedor)
+    public override Corretor ToEntity(CorretorUpdateRequest request, Corretor corretor)
     {
-        vendedor.Update(request.Nome, request.Telefone);
-        return vendedor;
+        corretor.Update(request.Nome, request.Telefone);
+        return corretor;
     }
 
-    public override IEnumerable<VendedorReadResponse> ToReadResponse(IEnumerable<Vendedor> entities)
+    public override IEnumerable<CorretorReadResponse> ToReadResponse(IEnumerable<Corretor> entities)
     {
-        return entities.Select(x => new VendedorReadResponse
+        return entities.Select(x => new CorretorReadResponse
         {
             Telefone = x.Telefone,
             Nome = x.Nome,
@@ -55,9 +55,9 @@ public class VendedorAppService :
         });
     }
 
-    public override VendedorResponse ToResponse(Vendedor entity)
+    public override CorretorResponse ToResponse(Corretor entity)
     {
-        return new VendedorResponse
+        return new CorretorResponse
         {
             Telefone = entity.Telefone,
             Nome = entity.Nome,

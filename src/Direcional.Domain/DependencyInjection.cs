@@ -15,8 +15,8 @@ public static class DependencyInjection
         services.AddScoped<IReservaValidator, ReservaValidator>();
         services.AddScoped<IVendaService, VendaService>();
         services.AddScoped<IVendaValidator, VendaValidator>();
-        services.AddScoped<IVendedorService, VendedorService>();
-        services.AddScoped<IVendedorValidator, VendedorValidator>();
+        services.AddScoped<ICorretorService, CorretorService>();
+        services.AddScoped<ICorretorValidator, CorretorValidator>();
         services.AddScoped<IUsuarioService, UsuarioService>();
 
         return services;

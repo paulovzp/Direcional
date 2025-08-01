@@ -4,11 +4,11 @@ using FluentValidation;
 
 namespace Direcional.Domain;
 
-public class VendedorValidator : DirecionalValidator<Vendedor>, IVendedorValidator
+public class CorretorValidator : DirecionalValidator<Corretor>, ICorretorValidator
 {
-    private readonly IVendedorRepository _repository;
+    private readonly ICorretorRepository _repository;
 
-    public VendedorValidator(IVendedorRepository repository)
+    public CorretorValidator(ICorretorRepository repository)
     {
         _repository = repository;
     }
@@ -44,9 +44,9 @@ public class VendedorValidator : DirecionalValidator<Vendedor>, IVendedorValidat
     {
         RuleFor(x => x.Email)
             .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage(MensagemValidacao.Vendedor.EmailRequired)
-            .NotNull().WithMessage(MensagemValidacao.Vendedor.EmailRequired)
-            .MaximumLength(Vendedor.PropertyLength.Email).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Email", Vendedor.PropertyLength.Email))
+            .NotEmpty().WithMessage(MensagemValidacao.Corretor.EmailRequired)
+            .NotNull().WithMessage(MensagemValidacao.Corretor.EmailRequired)
+            .MaximumLength(Corretor.PropertyLength.Email).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Email", Corretor.PropertyLength.Email))
             .Must(email => EmailValidator.IsValid(email!)).WithMessage(MensagemValidacao.EmailInvalid)
             .MustAsync(async (cliente, email, cancellation) =>
             {
@@ -59,18 +59,18 @@ public class VendedorValidator : DirecionalValidator<Vendedor>, IVendedorValidat
     {
         RuleFor(x => x.Nome)
             .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage(MensagemValidacao.Vendedor.NomeRequired)
-            .NotNull().WithMessage(MensagemValidacao.Vendedor.NomeRequired)
-            .MaximumLength(Vendedor.PropertyLength.Nome).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Nome", Vendedor.PropertyLength.Nome));
+            .NotEmpty().WithMessage(MensagemValidacao.Corretor.NomeRequired)
+            .NotNull().WithMessage(MensagemValidacao.Corretor.NomeRequired)
+            .MaximumLength(Corretor.PropertyLength.Nome).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Nome", Corretor.PropertyLength.Nome));
     }
 
     private void Telefone()
     {
         RuleFor(x => x.Telefone)
             .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage(MensagemValidacao.Vendedor.TelefoneRequired)
-            .NotNull().WithMessage(MensagemValidacao.Vendedor.TelefoneRequired)
-            .MaximumLength(Vendedor.PropertyLength.Telefone).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Telefone", Vendedor.PropertyLength.Telefone));
+            .NotEmpty().WithMessage(MensagemValidacao.Corretor.TelefoneRequired)
+            .NotNull().WithMessage(MensagemValidacao.Corretor.TelefoneRequired)
+            .MaximumLength(Corretor.PropertyLength.Telefone).WithMessage(string.Format(MensagemValidacao.MaxLengthMessage, "Telefone", Corretor.PropertyLength.Telefone));
     }
 
     private void VendeuApartamento()
@@ -80,7 +80,7 @@ public class VendedorValidator : DirecionalValidator<Vendedor>, IVendedorValidat
             {
                 var existe = await _repository.Exists(x => x.Id == cliente.Id && x.Vendas.Any());
                 return !existe;
-            }).WithMessage(MensagemValidacao.Vendedor.NaoPodeSerExcluido);
+            }).WithMessage(MensagemValidacao.Corretor.NaoPodeSerExcluido);
     }
 
     private void ReservouAparamento()
@@ -90,6 +90,6 @@ public class VendedorValidator : DirecionalValidator<Vendedor>, IVendedorValidat
             {
                 var existe = await _repository.Exists(x => x.Id == cliente.Id && x.Reservas.Any());
                 return !existe;
-            }).WithMessage(MensagemValidacao.Vendedor.NaoPodeSerExcluido);
+            }).WithMessage(MensagemValidacao.Corretor.NaoPodeSerExcluido);
     }
 }

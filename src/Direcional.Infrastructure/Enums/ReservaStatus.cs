@@ -13,10 +13,3 @@ public enum ReservaStatus
     Cancelada = 3,
     Expirada = 4
 }
-
-public enum TipoUsuario
-{
-    Admin = 0,
-    Vendedor = 1,
-    Cliente = 2
-}
