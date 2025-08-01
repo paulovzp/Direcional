@@ -8,9 +8,9 @@ public abstract class DirecionalAppService<TEntity, TReponse, TReadResponse, TCr
     : IDirecionalAppService<TReponse, TReadResponse, TCreateRequest, TUpdateRequest, TFilterRequest>
     where TEntity : DirecionalEntity
 {
-    private readonly IDirecionalService<TEntity> _service;
-    private readonly IDirecionalRepository<TEntity> _repository;
-    private readonly IDirecionalUnitOfWork _unitOfWork;
+    protected readonly IDirecionalService<TEntity> _service;
+    protected readonly IDirecionalRepository<TEntity> _repository;
+    protected readonly IDirecionalUnitOfWork _unitOfWork;
 
     public DirecionalAppService(IDirecionalService<TEntity> service,
         IDirecionalRepository<TEntity> repository,

@@ -8,6 +8,7 @@ public class ReservaAppService :
     DirecionalAppService<Reserva, ReservaResponse, ReservaReadResponse, ReservaCreateRequest, ReservaUpdateRequest, ReservaFilterRequest>
     , IReservaAppService
 {
+    private IReservaService _reservaService => (IReservaService) _service;
     public ReservaAppService(IReservaService service,
         IReservaRepository repository,
         IDirecionalUnitOfWork unitOfWork)
@@ -24,14 +25,25 @@ public class ReservaAppService :
     {
         return sortBy.ToLower() switch
         {
-            "nome" => func => func.Id,
+            "clientenome" => func => func.Cliente.Nome,
+            "vendedorNome" => func => func.Vendedor.Nome,
+            "data" => func => func.DataReserva,
             _ => func => func.Id,
         };
     }
 
+    public async Task Cancelar(int id)
+    {
+        var reserva = await ReadEntity(id);
+        await _reservaService.Cancelar(reserva);
+        await _unitOfWork.CommitAsync();
+    }
+
     public override Reserva ToEntity(ReservaCreateRequest request)
     {
-        return new Reserva();
+        //TO DO: Buscar da sessão do vendedor logado
+        var vendedorId = 1;
+        return Reserva.Create(request.ClienteId, request.ApartamentoId, vendedorId);
     }
 
     public override Reserva ToEntity(ReservaUpdateRequest request, Reserva reserva)
@@ -43,7 +55,17 @@ public class ReservaAppService :
     {
         return entities.Select(x => new ReservaReadResponse
         {
-
+            DataReserva = x.DataReserva,
+            DataStatusAlterado = x.DataStatusAlterado,
+            Id = x.Id,
+            ClienteId = x.ClienteId,
+            ClienteNome = x.Cliente.Nome,
+            VendedorId = x.VendedorId,
+            VendedorNome = x.Vendedor.Nome,
+            ApartamentoId = x.ApartamentoId,
+            ApartamentoAndar = x.Apartamento.Andar,
+            ApartamentoNumero = x.Apartamento.Numero,
+            Status = x.Status.ToString()
         });
     }
 
@@ -51,6 +73,17 @@ public class ReservaAppService :
     {
         return new ReservaResponse
         {
+            DataReserva = entity.DataReserva,
+            DataStatusAlterado = entity.DataStatusAlterado,
+            Id = entity.Id,
+            ClienteId = entity.ClienteId,
+            ClienteNome = entity.Cliente.Nome,
+            VendedorId = entity.VendedorId,
+            VendedorNome = entity.Vendedor.Nome,
+            ApartamentoId = entity.ApartamentoId,
+            ApartamentoAndar = entity.Apartamento.Andar,
+            ApartamentoNumero = entity.Apartamento.Numero,
+            Status = entity.Status.ToString()
         };
     }
 }

@@ -6,5 +6,7 @@ public static class EndpointExtensions
     {
         app.MapVendedorEndpoints();
         app.MapClienteEndpoints();
+        app.MapReservaEndpoints();
+        app.MapApartamentoEndpoints();
     }
 }

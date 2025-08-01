@@ -14,6 +14,9 @@ public class ReservaMapping : IEntityTypeConfiguration<Reserva>
         builder.Property(x => x.DataReserva)
            .IsRequired();
 
+        builder.Property(x => x.DataStatusAlterado)
+           .IsRequired(false);
+
         builder.HasOne(x => x.Cliente)
             .WithMany(x => x.Reservas)
             .HasForeignKey(x => x.ClienteId)

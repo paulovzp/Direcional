@@ -20,13 +20,16 @@ public class DirecionalRepository<T> : IDirecionalRepository<T>
 
     public void Dispose() => _dbContext.Dispose();
 
-    public async Task<bool> Exists(Expression<Func<T, bool>> expression) => await _dbSet.Where(expression).AnyAsync();
+    public async Task<bool> Exists(Expression<Func<T, bool>> expression) 
+        => await _dbSet.Where(expression).AnyAsync();
 
-    public async Task<T?> Get(int id) => await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+    public async Task<T?> Get(int id) => 
+        await Get().FirstOrDefaultAsync(x => x.Id == id);
 
     public async Task<Tuple<IEnumerable<T>, int>> Get(Expression<Func<T, bool>> expression, Expression<Func<T, object>> sorting, bool reverse, int page, int pageSize)
     {
-        var query = _dbSet.Where(expression);
+        var query = Get()
+            .Where(expression);
 
         if (reverse)
             query = query.OrderByDescending(sorting);
@@ -42,7 +45,13 @@ public class DirecionalRepository<T> : IDirecionalRepository<T>
         return new Tuple<IEnumerable<T>, int>(result.AsEnumerable(), totalCount);
     }
 
-    public Task<List<T>> Get(Expression<Func<T, bool>> expression) => _dbSet.Where(expression).ToListAsync();
+    protected virtual IQueryable<T> Get()
+    {
+        return _dbSet.AsQueryable();
+    }
+
+    public Task<List<T>> Get(Expression<Func<T, bool>> expression) 
+        => Get().Where(expression).ToListAsync();
 
     public async Task Remove(T entity)
     {

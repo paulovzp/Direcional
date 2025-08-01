@@ -9,4 +9,5 @@ public class ApartamentoRepository : DirecionalRepository<Apartamento>, IApartam
         : base(dbContext)
     {
     }
+
 }

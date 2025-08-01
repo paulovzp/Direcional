@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Direcional.Application\Direcional.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Endpoitns\NewFolder\" />
-  </ItemGroup>
-
 </Project>
