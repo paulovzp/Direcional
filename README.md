@@ -70,3 +70,5 @@ post	/api/corretor
 
 
 ## 🚀 Estrutura de Tabelas
+
+![Diagrama ER do banco](docs/diagram.png)
