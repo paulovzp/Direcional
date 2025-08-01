@@ -17,7 +17,8 @@ public static class DependencyInjection
         services.AddScoped<IReservaAppService, ReservaAppService>();
         services.AddScoped<IVendaAppService, VendaAppService>();
         services.AddScoped<ICorretorAppService, CorretorAppService>();
-        
+        services.AddScoped<IAuthAppService, AuthAppService>();
+
         return services;
     }
 }

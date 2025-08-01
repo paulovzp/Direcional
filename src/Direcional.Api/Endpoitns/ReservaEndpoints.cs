@@ -21,7 +21,7 @@ public static class ReservaEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status403Forbidden)
             .WithTags("Reserva")
-            //.RequireAuthorization()
+            .RequireAuthorization()
             ;
 
         app.MapGroup("api/reserva")
@@ -36,7 +36,7 @@ public static class ReservaEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Reserva")
-            //.RequireAuthorization()
+            .RequireAuthorization()
             ;
 
         app.MapGroup("api/reserva")
@@ -50,7 +50,7 @@ public static class ReservaEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Reserva")
-            //.RequireAuthorization()
+            .RequireAuthorization()
             ;
 
         app.MapGroup("api/reserva")
@@ -65,7 +65,7 @@ public static class ReservaEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Reserva")
-            //.RequireAuthorization()
+            .RequireAuthorization()
             ;
     }
 }

@@ -22,13 +22,21 @@ public class Usuario : DirecionalEntity
         HashPassword = HashGenerator(Salt, password);
     }
 
+    public bool ValidarSenha(string password)
+    {
+        if (string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password))
+            return false;
+
+        var hashPassword = HashGenerator(Salt, password);
+        return HashPassword.Equals(hashPassword, StringComparison.OrdinalIgnoreCase);
+    }
+
     private string HashGenerator(string salt, string password)
     {
         string saltedPassword = password + salt;
-        byte[] data = Encoding.ASCII.GetBytes(saltedPassword);
-        data = new HMACSHA256().ComputeHash(data);
-
-        return Encoding.ASCII.GetString(data);
+        using var sha = SHA256.Create();
+        var hash = Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(saltedPassword)));
+        return hash;
     }
 
     private string SaltGenerator()

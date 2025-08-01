@@ -8,5 +8,5 @@ public interface IUsuarioService
 
 public interface IUsuarioRepository : IDirecionalRepository<Usuario>
 {
-
+    Task<Usuario?> ObterPorEmail(string email);
 }

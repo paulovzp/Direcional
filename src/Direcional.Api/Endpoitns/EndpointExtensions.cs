@@ -9,5 +9,6 @@ public static class EndpointExtensions
         app.MapReservaEndpoints();
         app.MapApartamentoEndpoints();
         app.MapVendaEndpoints();
+        app.MapAuthEndpoints();
     }
 }
