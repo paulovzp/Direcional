@@ -51,8 +51,22 @@ cd src/Direcional.Api
 dotnet run
 ```
 
-5. **Acesse a API via Swagger**
+## 🚀 Testar o Projeto
+
+1. **Acesse a API via Swagger**
 ```bash
 http://localhost:44330/swagger
 ```
 
+2. **Criar um corretor**
+```bash
+post	/api/corretor
+{
+  "email": "corretor@direcional.com.br",
+  "telefone": "+55 38 999997788",
+  "nome": "Corretor Direcional"
+}
+```
+
+
+## 🚀 Estrutura de Tabelas
