@@ -21,7 +21,7 @@ public static class VendaEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status403Forbidden)
             .WithTags("Venda")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
             ;
 
         app.MapGroup("api/venda")
@@ -37,7 +37,7 @@ public static class VendaEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Venda")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
             ;
     }
 }

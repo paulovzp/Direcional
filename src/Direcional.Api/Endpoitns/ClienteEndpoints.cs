@@ -21,7 +21,7 @@ public static class ClienteEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status403Forbidden)
             .WithTags("Cliente")
-            .RequireAuthorization();
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
 
         app.MapGroup("api/cliente")
             .MapGet("{id}", async ([FromRoute] int id, IClienteAppService appService) =>
@@ -35,7 +35,7 @@ public static class ClienteEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Cliente")
-            .RequireAuthorization();
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
 
         app.MapGroup("api/cliente")
             .MapPost("", async ([FromBody] ClienteCreateRequest request, IClienteAppService appService) =>
@@ -48,7 +48,7 @@ public static class ClienteEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Cliente")
-            .RequireAuthorization();
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
 
         app.MapGroup("api/cliente")
             .MapPut("{id}", async ([FromRoute] int id, [FromBody] ClienteUpdateRequest request, IClienteAppService appService) =>
@@ -62,7 +62,7 @@ public static class ClienteEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Cliente")
-            .RequireAuthorization();
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
 
         app.MapGroup("api/cliente")
             .MapDelete("{id}", async ([FromRoute] int id, IClienteAppService appService) =>
@@ -76,6 +76,6 @@ public static class ClienteEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Cliente")
-            .RequireAuthorization();
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
     }
 }

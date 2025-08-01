@@ -1,7 +1,9 @@
 using Direcional.Api.Endpoitns;
 using Direcional.Api.Filters;
+using Direcional.Api.Session;
 using Direcional.Application;
 using Direcional.Infrastructure.Extensions;
+using Direcional.Infrastructure.Interfaces;
 using Direcional.Infrastructure.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -20,6 +22,7 @@ builder.Services.AddOpenApi(options =>
 
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<IUserSession, UserSession>();
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();

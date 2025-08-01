@@ -35,6 +35,7 @@ public class ApartamentoAppService :
     {
         return new Apartamento()
         {
+            Nome = request.Nome,
             Numero = request.Numero,
             Andar = request.Andar,
             ValorVenda = request.ValorVenda
@@ -44,6 +45,7 @@ public class ApartamentoAppService :
     public override Apartamento ToEntity(ApartamentoUpdateRequest request, Apartamento apartamento)
     {
         apartamento.ValorVenda = request.ValorVenda;
+        apartamento.Nome = request.Nome;
         return apartamento;
     }
 
@@ -51,7 +53,7 @@ public class ApartamentoAppService :
     {
         var apartamento = await ReadEntity(apartamentoId);
         var disponivel = await _apartamentoService.Disponivel(apartamento.Id);
-        string baseMessage = $"Apartamento {apartamento.Numero} no andar {apartamento.Andar}";
+        string baseMessage = $"Apartamento {apartamento.Nome} {apartamento.Numero} no andar {apartamento.Andar}";
         string message = disponivel ? $"{baseMessage} disponível." : $"{baseMessage} não disponível.";
         return new ApartamentoDisponivel(message);
     }
@@ -61,6 +63,7 @@ public class ApartamentoAppService :
         return entities.Select(x => new ApartamentoReadResponse
         {
             Numero = x.Numero,
+            Nome = x.Nome,
             Andar = x.Andar,
             Id = x.Id,
             ValorVenda = x.ValorVenda
@@ -74,7 +77,8 @@ public class ApartamentoAppService :
             Numero = entity.Numero,
             Andar = entity.Andar,
             Id = entity.Id,
-            ValorVenda = entity.ValorVenda
+            ValorVenda = entity.ValorVenda,
+            Nome = entity.Nome
         };
     }
 }

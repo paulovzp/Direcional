@@ -8,6 +8,7 @@ public class ApartamentoResponse
     public int Numero { get; set; }
     public int Andar { get; set; }
     public decimal ValorVenda { get; set; }
+    public string Nome { get; set; }
 }
 
 public class ApartamentoReadResponse
@@ -16,6 +17,7 @@ public class ApartamentoReadResponse
     public int Numero { get; set; }
     public int Andar { get; set; }
     public decimal ValorVenda { get; set; }
+    public string Nome { get; set; }
 }
 
 public class ApartamentoCreateRequest
@@ -23,11 +25,13 @@ public class ApartamentoCreateRequest
     public int Numero { get; set; }
     public int Andar { get; set; }
     public decimal ValorVenda { get; set; }
+    public string Nome { get; set; }
 }
 
 public class ApartamentoUpdateRequest
 {
     public decimal ValorVenda { get; set; }
+    public string Nome { get; set; }
 
 }
 
@@ -37,4 +41,5 @@ public class ApartamentoFilterRequest
     public int? Andar { get; set; }
     public decimal? ValorVendaInicio { get; set; }
     public decimal? ValorVendaFim { get; set; }
+    public string Nome { get; set; }
 }

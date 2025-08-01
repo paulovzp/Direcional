@@ -69,6 +69,73 @@ post	/api/corretor
 ```
 
 
-## 🚀 Estrutura de Tabelas
+## 📝 Considerações e Decisões Técnicas
+
+🏗️ Arquitetura e Estrutura do Projeto
+
+	Decisão: Clean Architecture
+		•	Estrutura em Camadas: O projeto segue os princípios da Clean Architecture com separação clara de responsabilidades:
+		•	Direcional.Api: Camada de apresentação (Controllers/Endpoints)
+		•	Direcional.Application: Camada de aplicação (Services, DTOs, Interfaces)
+		•	Direcional.Domain: Camada de domínio (Entidades, Regras de negócio, Services)
+		•	Direcional.Persistence: Camada de infraestrutura (Repositórios, Context)
+		•	Direcional.Infrastructure: Camada de infraestrutura compartilhada
+	Justificativa
+		•	Facilita manutenibilidade e testabilidade
+		•	Permite evolução independente das camadas
+		•	Segue princípios SOLID
+		•	Reduz acoplamento entre componentes
+
+📊 Banco de Dados
+	
+	Modelagem
+		•	Padrão: Domain-Driven Design (DDD)
+		•	Entidades Principais: Cliente, Corretor, Apartamento, Venda, Reserva
+		•	Relacionamentos: Definidos com FK constraints
+		•	Auditoria: Campos CreatedAt e UpdatedAt em todas as entidades
 
 ![Diagrama ER do banco](docs/Diagram.png)
+
+🔧 Padrões de Desenvolvimento
+
+	Repository Pattern
+		•	Implementação: Generic repository com serviços específicos
+		•	Benefícios: Abstração da camada de dados, facilita testes unitários
+	Service Layer Pattern
+		•	Implementação: Serviços de domínio e aplicação separados
+		•	Exemplo: VendaService para regras específicas de vendas
+		•	Benefícios: Concentração da lógica de negócio
+	Validation Pattern
+		•	Implementação: FluentValidation com rule sets
+		•	Regras: CreateRule, UpdateRule, DeleteRule
+		•	Benefícios: Validações centralizadas e reutilizáveis
+
+🔄 Padrões de Negócio
+
+	Domain Services
+		•	Exemplo: VendaService.Efetuar() para processar vendas
+		•	Regras: Validação de valor de entrada, mudança de status do apartamento
+		•	Benefícios: Encapsulamento de regras complexas de negócio
+	Status Management
+		•	Apartamentos: Disponível → Reservado → Vendido
+		•	Controle: Através de enums e validações no domínio
+
+🧪 Estratégia de Testes
+
+	Recomendações
+		1.	Testes Unitários: Para domain services e validators
+		2.	Testes de Integração: Para repositories e database
+		3.	Testes de API: Para endpoints usando TestServer
+		4.	Mocking: Para dependências externas
+
+📋 Considerações para Evolução
+
+	Melhorias Futuras
+		1.	Caching: Implementar Redis para dados frequentemente acessados
+		2.	Logging: Structured logging com Serilog
+		3.	Monitoring: Health checks e métricas
+		4.	CQRS: Para separação de comandos e consultas complexas
+	Escalabilidade
+		1.	Load Balancing: Preparado para múltiplas instâncias
+		2.	Database Sharding: Para crescimento de dados
+		3.	Microservices: Divisão por bounded contexts

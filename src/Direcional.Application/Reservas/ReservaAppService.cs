@@ -1,5 +1,6 @@
 ﻿using Direcional.Application.Common;
 using Direcional.Domain;
+using Direcional.Infrastructure.Interfaces;
 using System.Linq.Expressions;
 
 namespace Direcional.Application;
@@ -8,12 +9,16 @@ public class ReservaAppService :
     DirecionalAppService<Reserva, ReservaResponse, ReservaReadResponse, ReservaCreateRequest, ReservaUpdateRequest, ReservaFilterRequest>
     , IReservaAppService
 {
-    private IReservaService _reservaService => (IReservaService) _service;
+    private readonly IUserSession _userSession;
+
+    private IReservaService _reservaService => (IReservaService)_service;
     public ReservaAppService(IReservaService service,
         IReservaRepository repository,
-        IDirecionalUnitOfWork unitOfWork)
+        IDirecionalUnitOfWork unitOfWork,
+        IUserSession userSession)
         : base(service, repository, unitOfWork)
     {
+        _userSession = userSession;
     }
 
     public override Expression<Func<Reserva, bool>> GetFilter(FilterRequest<ReservaFilterRequest> request)
@@ -41,8 +46,7 @@ public class ReservaAppService :
 
     public override Reserva ToEntity(ReservaCreateRequest request)
     {
-        //TO DO: Buscar da sessão do corretor logado
-        var corretorId = 1;
+        var corretorId = _userSession.Id;
         return Reserva.Create(request.ClienteId, request.ApartamentoId, corretorId);
     }
 

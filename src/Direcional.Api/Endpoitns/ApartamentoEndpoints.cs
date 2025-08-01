@@ -21,7 +21,7 @@ public static class ApartamentoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status403Forbidden)
             .WithTags("Apartamento")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
             ;
 
         app.MapGroup("api/apartamento")
@@ -36,7 +36,7 @@ public static class ApartamentoEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Apartamento")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
             ;
 
         app.MapGroup("api/apartamento")
@@ -50,7 +50,7 @@ public static class ApartamentoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithTags("Apartamento")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
             ;
 
         app.MapGroup("api/apartamento")
@@ -64,7 +64,7 @@ public static class ApartamentoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Apartamento")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
             ;
 
         app.MapGroup("api/apartamento")
@@ -79,7 +79,7 @@ public static class ApartamentoEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Apartamento")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
             ;
 
         app.MapGroup("api/apartamento")
@@ -94,7 +94,7 @@ public static class ApartamentoEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Apartamento")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
             ;
     }
 }
