@@ -69,7 +69,7 @@ public abstract class DirecionalAppService<TEntity, TReponse, TReadResponse, TCr
     }
 
 
-    public abstract Expression<Func<TEntity, bool>> GetFilter(FilterRequest<TFilterRequest> request);
+    public abstract List<Expression<Func<TEntity, bool>>> GetFilter(FilterRequest<TFilterRequest> request);
     public abstract Expression<Func<TEntity, object>> GetSort(string sortBy);
     public abstract TEntity ToEntity(TCreateRequest request);
     public abstract TEntity ToEntity(TUpdateRequest request, TEntity entity);

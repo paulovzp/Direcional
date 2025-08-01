@@ -9,6 +9,7 @@ public class DirecionalDbContext : DbContext
     public DirecionalDbContext(DbContextOptions<DirecionalDbContext> options)
         : base(options)
     {
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,7 +44,7 @@ public class DirecionalDbContextFactory : IDesignTimeDbContextFactory<Direcional
     {
         var optionsBuilder = new DbContextOptionsBuilder<DirecionalDbContext>();
         optionsBuilder.UseSqlServer("Server=localhost;Database=DirecionalDB;User=sa;Password=d1r3c10nalDBp@ssw0rd;TrustServerCertificate=true;");
-
+        
         return new DirecionalDbContext(optionsBuilder.Options);
     }
 }

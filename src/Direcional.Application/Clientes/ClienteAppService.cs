@@ -15,10 +15,25 @@ public class ClienteAppService :
     {
     }
 
-    public override Expression<Func<Cliente, bool>> GetFilter(FilterRequest<ClienteFilterRequest> request)
+    public override List<Expression<Func<Cliente, bool>>> GetFilter(FilterRequest<ClienteFilterRequest> request)
     {
-        Expression<Func<Cliente, bool>> expression = x => true;
-        return expression;
+        var expressions = new List<Expression<Func<Cliente, bool>>>();
+        if (request.Filter is null)
+            return expressions;
+
+        if (!string.IsNullOrEmpty(request.Filter.Nome))
+            expressions.Add(func => func.Nome.Contains(request.Filter.Nome));
+
+        if (!string.IsNullOrEmpty(request.Filter.Email))
+            expressions.Add(func => func.Email.Contains(request.Filter.Email));
+
+        if (!string.IsNullOrEmpty(request.Filter.Telefone))
+            expressions.Add(func => func.Telefone.Contains(request.Filter.Telefone));
+
+        if (request.Filter.Id.HasValue)
+            expressions.Add(func => func.Id == request.Filter.Id.Value);
+
+        return expressions;
     }
 
     public override Expression<Func<Cliente, object>> GetSort(string sortBy)

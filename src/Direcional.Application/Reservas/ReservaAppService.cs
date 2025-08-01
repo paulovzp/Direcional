@@ -10,7 +10,6 @@ public class ReservaAppService :
     , IReservaAppService
 {
     private readonly IUserSession _userSession;
-
     private IReservaService _reservaService => (IReservaService)_service;
     public ReservaAppService(IReservaService service,
         IReservaRepository repository,
@@ -21,9 +20,28 @@ public class ReservaAppService :
         _userSession = userSession;
     }
 
-    public override Expression<Func<Reserva, bool>> GetFilter(FilterRequest<ReservaFilterRequest> request)
+    public override List<Expression<Func<Reserva, bool>>> GetFilter(FilterRequest<ReservaFilterRequest> request)
     {
-        return x => true;
+        var expressions = new List<Expression<Func<Reserva, bool>>>();
+        if (request.Filter is null)
+            return expressions;
+
+        if (request.Filter.CorretorId.HasValue)
+            expressions.Add(func => func.CorretorId == request.Filter.CorretorId.Value);
+
+        if (request.Filter.ClienteId.HasValue)
+            expressions.Add(func => func.ClienteId == request.Filter.ClienteId.Value);
+
+        if (request.Filter.ApartamentoId.HasValue)
+            expressions.Add(func => func.ApartamentoId == request.Filter.ApartamentoId.Value);
+
+        if (request.Filter.DataReservaInicio.HasValue)
+            expressions.Add(func => func.DataReserva >= request.Filter.DataReservaInicio.Value.Date);
+
+        if (request.Filter.DataReservaFim.HasValue)
+            expressions.Add(func => func.DataReserva <= request.Filter.DataReservaFim.Value.Date);
+
+        return expressions;
     }
 
     public override Expression<Func<Reserva, object>> GetSort(string sortBy)

@@ -44,4 +44,8 @@ public class ReservaUpdateRequest
 public class ReservaFilterRequest
 {
     public int? CorretorId { get; set; }
+    public int? ClienteId { get; set; }
+    public DateTime? DataReservaInicio { get; set; }
+    public DateTime? DataReservaFim { get; set; }
+    public int? ApartamentoId { get; internal set; }
 }

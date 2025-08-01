@@ -28,9 +28,28 @@ public class VendaAppService :
         await _unitOfWork.CommitAsync();
     }
 
-    public override Expression<Func<Venda, bool>> GetFilter(FilterRequest<VendaFilterRequest> request)
+    public override List<Expression<Func<Venda, bool>>> GetFilter(FilterRequest<VendaFilterRequest> request)
     {
-        return x => true;
+        var expressions = new List<Expression<Func<Venda, bool>>>();
+        if (request.Filter is null)
+            return expressions;
+
+        if (request.Filter.CorretorId.HasValue)
+            expressions.Add(func => func.CorretorId == request.Filter.CorretorId.Value);
+
+        if (request.Filter.ClienteId.HasValue)
+            expressions.Add(func => func.ClienteId == request.Filter.ClienteId.Value);
+
+        if (request.Filter.ApartamentoId.HasValue)
+            expressions.Add(func => func.ApartamentoId == request.Filter.ApartamentoId.Value);
+
+        if (request.Filter.DataInicio.HasValue)
+            expressions.Add(func => func.DataVenda >= request.Filter.DataInicio.Value.Date);
+
+        if (request.Filter.DataFim.HasValue)
+            expressions.Add(func => func.DataVenda <= request.Filter.DataFim.Value.Date);
+
+        return expressions;
     }
 
     public override Expression<Func<Venda, object>> GetSort(string sortBy)

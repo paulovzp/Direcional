@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Direcional.Application\Direcional.Application.csproj" />
+    <ProjectReference Include="..\..\src\Direcional.Infrastructure\Direcional.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

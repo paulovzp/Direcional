@@ -15,7 +15,7 @@ public class Usuario : DirecionalEntity
     public Corretor Corretor { get; set; }
     public Cliente Cliente { get; set; }
 
-    public void SetPassword(string password)
+    public void DefinirSenha(string password)
     {
         Senha = password;
         Salt = SaltGenerator();

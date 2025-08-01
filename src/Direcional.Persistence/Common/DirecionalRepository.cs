@@ -1,5 +1,6 @@
 ﻿using Direcional.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Linq.Expressions;
 
 namespace Direcional.Persistence.Common;
@@ -20,10 +21,10 @@ public class DirecionalRepository<T> : IDirecionalRepository<T>
 
     public void Dispose() => _dbContext.Dispose();
 
-    public async Task<bool> Exists(Expression<Func<T, bool>> expression) 
+    public async Task<bool> Exists(Expression<Func<T, bool>> expression)
         => await _dbSet.Where(expression).AnyAsync();
 
-    public async Task<T?> Get(int id) => 
+    public async Task<T?> Get(int id) =>
         await Get().FirstOrDefaultAsync(x => x.Id == id);
 
     public async Task<Tuple<IEnumerable<T>, int>> Get(Expression<Func<T, bool>> expression, Expression<Func<T, object>> sorting, bool reverse, int page, int pageSize)
@@ -45,12 +46,35 @@ public class DirecionalRepository<T> : IDirecionalRepository<T>
         return new Tuple<IEnumerable<T>, int>(result.AsEnumerable(), totalCount);
     }
 
+    public async Task<Tuple<IEnumerable<T>, int>> Get(List<Expression<Func<T, bool>>> expressions, Expression<Func<T, object>> sorting, bool reverse, int page, int pageSize)
+    {
+        var query = Get();
+
+        foreach (var expression in expressions)
+        {
+            query = query.Where(expression);
+        }
+
+        if (reverse)
+            query = query.OrderByDescending(sorting);
+        else
+            query = query.OrderBy(sorting);
+
+        int totalCount = await query.CountAsync();
+
+        if (totalCount == 0)
+            return new Tuple<IEnumerable<T>, int>(Enumerable.Empty<T>(), 0);
+
+        var result = await query.Skip(pageSize * (page - 1)).Take(pageSize).ToListAsync();
+        return new Tuple<IEnumerable<T>, int>(result.AsEnumerable(), totalCount);
+    }
+
     protected virtual IQueryable<T> Get()
     {
         return _dbSet.AsQueryable();
     }
 
-    public Task<List<T>> Get(Expression<Func<T, bool>> expression) 
+    public Task<List<T>> Get(Expression<Func<T, bool>> expression)
         => Get().Where(expression).ToListAsync();
 
     public async Task Remove(T entity)
@@ -64,4 +88,6 @@ public class DirecionalRepository<T> : IDirecionalRepository<T>
         _dbSet.Update(entity);
         await Task.CompletedTask;
     }
+
+
 }

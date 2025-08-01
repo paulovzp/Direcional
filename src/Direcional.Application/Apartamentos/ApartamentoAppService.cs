@@ -16,9 +16,29 @@ public class ApartamentoAppService :
     {
     }
 
-    public override Expression<Func<Apartamento, bool>> GetFilter(FilterRequest<ApartamentoFilterRequest> request)
+    public override List<Expression<Func<Apartamento, bool>>> GetFilter(FilterRequest<ApartamentoFilterRequest> request)
     {
-        return x => true;
+        var expressions = new List<Expression<Func<Apartamento, bool>>>();
+
+        if (request.Filter is null)
+            return expressions;
+
+        if (!string.IsNullOrEmpty(request.Filter.Nome))
+            expressions.Add(func => func.Nome.Contains(request.Filter.Nome));
+
+        if (request.Filter.Numero.HasValue)
+            expressions.Add(func => func.Numero == request.Filter.Numero.Value);
+
+        if (request.Filter.Andar.HasValue)
+            expressions.Add(func => func.Andar == request.Filter.Andar.Value);
+
+        if (request.Filter.ValorVendaInicio.HasValue)
+            expressions.Add(func => func.ValorVenda >= request.Filter.ValorVendaInicio.Value);
+
+        if (request.Filter.ValorVendaFim.HasValue)
+            expressions.Add(func => func.ValorVenda <= request.Filter.ValorVendaFim.Value);
+
+        return expressions;
     }
 
     public override Expression<Func<Apartamento, object>> GetSort(string sortBy)

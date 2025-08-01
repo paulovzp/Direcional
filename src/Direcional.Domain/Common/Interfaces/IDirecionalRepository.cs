@@ -9,6 +9,8 @@ public interface IDirecionalRepository<T> : IDisposable
     Task<bool> Exists(Expression<Func<T, bool>> expression);
     Task<Tuple<IEnumerable<T>, int>> Get(Expression<Func<T, bool>> expression, Expression<Func<T, object>> sorting,
         bool reverse, int page, int pageSize);
+    Task<Tuple<IEnumerable<T>, int>> Get(List<Expression<Func<T, bool>>> expressions, Expression<Func<T, object>> sorting,
+        bool reverse, int page, int pageSize);
     Task<List<T>> Get(Expression<Func<T, bool>> expression);
     Task Add(T entity);
     Task Update(T entity);

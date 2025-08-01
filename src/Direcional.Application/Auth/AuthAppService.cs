@@ -25,10 +25,17 @@ public class AuthAppService : IAuthAppService
 
     public async Task<UserAuthResponse> Authenticate(UserAuthRequest authRequest)
     {
-        var usuario = await _usuarioRepository.ObterPorEmail(authRequest.Email) ?? throw new DirecionalNotFoundException("Dados de login inválidos");
+        var email = authRequest.Email?.Trim();
+        var password = authRequest.Password?.Trim();
 
-        if(!usuario.ValidarSenha(authRequest.Password))
+        if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             throw new DirecionalNotFoundException("Dados de login inválidos");
+
+        var usuario = await _usuarioRepository.ObterPorEmail(email) ?? throw new DirecionalNotFoundException("Dados de login inválidos");
+
+        if(!usuario.ValidarSenha(password))
+            throw new DirecionalNotFoundException("Dados de login inválidos");
+
         DateTime expirationDate = DateTime.UtcNow.AddDays(_jwtSettings.DaysToExpire);
         var token = GenerateJwtToken(expirationDate, usuario.Id.ToString(), usuario.Email, usuario.Nome, usuario.Tipo.ToString());
         return new UserAuthResponse(token, usuario.Tipo.ToString(), _currentTime, expirationDate);

@@ -15,9 +15,26 @@ public class CorretorAppService :
     {
     }
 
-    public override Expression<Func<Corretor, bool>> GetFilter(FilterRequest<CorretorFilterRequest> request)
+    public override List<Expression<Func<Corretor, bool>>> GetFilter(FilterRequest<CorretorFilterRequest> request)
     {
-        return x => true;
+        var expressions = new List<Expression<Func<Corretor, bool>>>();
+        if (request.Filter is null)
+            return expressions;
+
+        if (!string.IsNullOrEmpty(request.Filter.Nome))
+            expressions.Add(func => func.Nome.Contains(request.Filter.Nome));
+
+        if (!string.IsNullOrEmpty(request.Filter.Telefone))
+            expressions.Add(func => func.Telefone.Contains(request.Filter.Telefone));
+
+        if (!string.IsNullOrEmpty(request.Filter.Email))
+            expressions.Add(func => func.Email.Contains(request.Filter.Email));
+
+        if (!string.IsNullOrEmpty(request.Filter.Codigo))
+            expressions.Add(func => func.Codigo.Contains(request.Filter.Codigo));
+
+
+        return expressions;
     }
 
     public override Expression<Func<Corretor, object>> GetSort(string sortBy)
