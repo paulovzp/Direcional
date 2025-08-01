@@ -23,6 +23,8 @@ A aplicação consiste em uma API RESTful desenvolvida em .NET 9 para gerenciar 
 
 ```bash
 git clone git@github.com:paulovzp/Direcional.git
+```
+```bash
 cd direcional
 ```
 
@@ -36,16 +38,21 @@ docker-compose up -d sqlserver
 
 ```bash
 cd src/Direcional.Persistence
+```
+```bash
 dotnet ef database update --project Direcional.Persistence.csproj
 ```
 
 4. **Execute a API**
 ```bash
 cd src/Direcional.Api
+```
+```bash
 dotnet run
 ```
 
-4. **Acesse a API via Swagger**
+5. **Acesse a API via Swagger**
 ```bash
 http://localhost:44330/swagger
 ```
+
