@@ -22,25 +22,30 @@ A aplicação consiste em uma API RESTful desenvolvida em .NET 9 para gerenciar 
 1. **Clone o repositório**
 
 ```bash
-git clone https://github.com/seu-usuario/direcional.git
+git clone git@github.com:paulovzp/Direcional.git
 cd direcional
+```
 
 2. **Execute com Docker Compose para criar apenas o banco**
 
 ```bash
 docker-compose up -d sqlserver
+```
 
 3. **Execute o migration**
 
 ```bash
 cd src/Direcional.Persistence
 dotnet ef database update --project Direcional.Persistence.csproj
+```
 
 4. **Execute a API**
 ```bash
 cd src/Direcional.Api
 dotnet run
+```
 
 4. **Acesse a API via Swagger**
 ```bash
 http://localhost:44330/swagger
+```
