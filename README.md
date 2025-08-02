@@ -54,20 +54,46 @@ dotnet run
 ## 🚀 Testar o Projeto
 
 1. **Acesse a API via Swagger**
-```bash
-http://localhost:44330/swagger
-```
+    - http://localhost:44330/swagger
 
-2. **Criar um corretor**
-```bash
-post	/api/corretor
-{
-  "email": "corretor@direcional.com.br",
-  "telefone": "+55 38 999997788",
-  "nome": "Corretor Direcional"
-}
-```
+2. **Realize o login com o usuário admin**
+	- Endpoint: `POST /api/auth/login`
+	- Payload: { "email": "admin@direcional.com.br", "senha": "123456" }
+	- Copie o token JWT retornado.
 
+3. **Configure o token JWT no Swagger**
+	- Clique em "Authorize" no topo da interface do Swagger.
+	- Cole o token JWT no campo solicitado (formato: `SEU_TOKEN_AQUI`).
+
+4. **Crie um corretor**
+	- Endpoint: `POST /api/corretor`
+	- Payload: { "email": "corretor@direcional.com.br", "telefone": "+55 38 999997788", "nome": "Corretor Direcional" }
+
+5. **Realize o login com o usuário Corretor**
+	- Endpoint: `POST /api/auth/login`
+	- Payload: { "email": "corretor@direcional.com.br", "senha": "123456" }
+	- Copie o token JWT retornado.
+
+6. **Configure o token JWT no Swagger**
+	- Clique em "Authorize" no topo da interface do Swagger.
+	- Cole o token JWT no campo solicitado (formato: `SEU_TOKEN_AQUI`).
+
+7. **Crie um cliente**
+    - Endpoint: `POST /api/cliente`
+    - Payload: { "email": "cliente@direcional.com.br", "telefone": "+55 38 988887766", "nome": "Cliente Teste" }
+
+8. **Crie um apartamento**
+    - Endpoint: `POST /api/apartamento`
+    - Payload: { "nome": "Apto 101", "numero": 101, "andar": 1, "valorVenda": 350000.00 }
+
+9. **Reservar apartamento**
+	- Endpoint: `POST /api/reserva`
+	- Payload: { "clienteId": 1, "apartamentoId": 1 }
+
+10. **Efetuar Venda**
+	- Endpoint: `POST /api/venda/{reservaId}/finalizar`
+	- reservaId substitua pelo ID da reserva criada (1)
+	- Payload: { "valorEntrada": 35000.00 }
 
 ## 📝 Considerações e Decisões Técnicas
 
