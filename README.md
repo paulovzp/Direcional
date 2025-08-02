@@ -135,6 +135,8 @@ post	/api/corretor
 		2.	Logging: Structured logging com Serilog
 		3.	Monitoring: Health checks e métricas
 		4.	CQRS: Para separação de comandos e consultas complexas
+		5.	Implementar mapeamento automático (Mapper) para facilitar conversão entre DTOs e entidades
+		6.  Usar Specification Pattern para consultas complexas e reutilizáveis
 	Escalabilidade
 		1.	Load Balancing: Preparado para múltiplas instâncias
 		2.	Database Sharding: Para crescimento de dados
