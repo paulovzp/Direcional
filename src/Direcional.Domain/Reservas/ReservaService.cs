@@ -12,11 +12,20 @@ public class ReservaService : DirecionalService<Reserva>, IReservaService
 
     public async Task Cancelar(Reserva reserva)
     {
-
         if (reserva.Status != ReservaStatus.Pendente)
-            throw new DirecionalDomainException($"Reserva não pode ser cancelar, status atual {reserva.Status.ToString()}");
+            throw new DirecionalDomainException($"Reserva não pode ser cancelada, status atual {reserva.Status.ToString()}");
 
-        reserva.UpdateStatus(ReservaStatus.Cancelada);
+        reserva.Cancelar();
+        await _repository.Update(reserva);
+    }
+
+    public async Task MarcarConfirmar(Reserva reserva)
+    {
+        if (reserva.Status != ReservaStatus.Pendente)
+            throw new DirecionalDomainException($"Reserva não pode ser confirmda, status atual {reserva.Status.ToString()}");
+
+
+        reserva.Confirmar();
         await _repository.Update(reserva);
     }
 }

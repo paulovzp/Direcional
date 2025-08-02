@@ -47,5 +47,5 @@ public class ReservaFilterRequest
     public int? ClienteId { get; set; }
     public DateTime? DataReservaInicio { get; set; }
     public DateTime? DataReservaFim { get; set; }
-    public int? ApartamentoId { get; internal set; }
+    public int? ApartamentoId { get; set; }
 }

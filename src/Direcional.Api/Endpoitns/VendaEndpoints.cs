@@ -21,8 +21,7 @@ public static class VendaEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status403Forbidden)
             .WithTags("Venda")
-            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
 
         app.MapGroup("api/venda")
             .MapPost("{reservaId}/finalizar", async ([FromRoute] int reservaId, 
@@ -37,7 +36,6 @@ public static class VendaEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Venda")
-            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
     }
 }

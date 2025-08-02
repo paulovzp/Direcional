@@ -20,9 +20,6 @@ public class UsuarioMapping : IEntityTypeConfiguration<Usuario>
            .HasMaxLength(Usuario.PropertyLength.Email)
            .IsRequired();
 
-        builder.Property(x => x.Senha)
-           .HasMaxLength(Usuario.PropertyLength.Senha)
-           .IsRequired();
 
         builder.Property(x => x.Nome)
            .HasMaxLength(Usuario.PropertyLength.Nome)

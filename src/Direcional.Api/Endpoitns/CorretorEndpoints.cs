@@ -21,8 +21,7 @@ public static class CorretorEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status403Forbidden)
             .WithTags("Corretor")
-            //.RequireAuthorization()
-            ;
+            .RequireAuthorization();
 
         app.MapGroup("api/corretor")
             .MapGet("{id}", async ([FromRoute] int id, ICorretorAppService appService) =>
@@ -36,8 +35,7 @@ public static class CorretorEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Corretor")
-            //.RequireAuthorization()
-            ;
+            .RequireAuthorization();
 
         app.MapGroup("api/corretor")
             .MapPost("", async ([FromBody] CorretorCreateRequest request, ICorretorAppService appService) =>
@@ -50,8 +48,7 @@ public static class CorretorEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Corretor")
-            //.RequireAuthorization()
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         app.MapGroup("api/corretor")
             .MapPut("{id}", async ([FromRoute] int id, [FromBody] CorretorUpdateRequest request, ICorretorAppService appService) =>
@@ -65,8 +62,7 @@ public static class CorretorEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Corretor")
-            //.RequireAuthorization()
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         app.MapGroup("api/corretor")
             .MapDelete("{id}", async ([FromRoute] int id, ICorretorAppService appService) =>
@@ -80,7 +76,6 @@ public static class CorretorEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Corretor")
-            //.RequireAuthorization()
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Admin"));
     }
 }

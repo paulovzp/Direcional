@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Direcional.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +38,6 @@ namespace Direcional.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     HashPassword = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Salt = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -170,6 +169,11 @@ namespace Direcional.Persistence.Migrations
                         principalTable: "Corretores",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Usuarios",
+                columns: new[] { "Id", "CreatedAt", "Email", "HashPassword", "Nome", "Salt", "Tipo", "UpdatedAt" },
+                values: new object[] { 1, new DateTime(2024, 8, 2, 0, 0, 0, 0, DateTimeKind.Utc), "admin@direcional.com.br", "6Q8lFNrM3ry1v/lnmq7SaK+eKp10mY+3Oq/3T8fcHy8=", "Administrador", "+jpUXXIe840y6q0avkrIyQ==", "Admin", new DateTime(2024, 8, 2, 0, 0, 0, 0, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_UsuarioId",

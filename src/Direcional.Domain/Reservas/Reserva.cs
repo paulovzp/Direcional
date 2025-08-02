@@ -14,10 +14,20 @@ public class Reserva : DirecionalEntity
     public DateTime DataReserva { get; private set; } = DateTime.Now;
     public DateTime? DataStatusAlterado { get; private set; } = DateTime.Now;
 
-    public void UpdateStatus(ReservaStatus status)
+    private void UpdateStatus(ReservaStatus status)
     {
         Status = status;
         DataStatusAlterado = DateTime.Now;
+    }
+
+    public void Cancelar()
+    {
+        UpdateStatus(ReservaStatus.Cancelada);
+    }
+
+    public void Confirmar()
+    {
+        UpdateStatus(ReservaStatus.Confirmada);
     }
 
     public static Reserva Create(int clienteId, int apartamentoId, int corretorId)
@@ -29,4 +39,6 @@ public class Reserva : DirecionalEntity
             CorretorId = corretorId,
         };
     }
+
+
 }

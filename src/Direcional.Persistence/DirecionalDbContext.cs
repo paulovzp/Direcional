@@ -16,6 +16,22 @@ public class DirecionalDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DirecionalDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
+        Seed(modelBuilder);
+    }
+
+    private void Seed(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Usuario>().HasData(new Usuario
+        {
+            Id = 1,
+            Email = "admin@direcional.com.br",
+            Nome = "Administrador",
+            Tipo = Infrastructure.Enums.TipoUsuario.Admin,
+            HashPassword = "6Q8lFNrM3ry1v/lnmq7SaK+eKp10mY+3Oq/3T8fcHy8=",
+            Salt = "+jpUXXIe840y6q0avkrIyQ==",
+            CreatedAt = new DateTime(2024, 08, 02, 0, 0, 0, DateTimeKind.Utc),
+            UpdatedAt = new DateTime(2024, 08, 02, 0, 0, 0, DateTimeKind.Utc)
+        });
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

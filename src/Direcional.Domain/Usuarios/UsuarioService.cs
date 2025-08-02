@@ -11,7 +11,7 @@ public class UsuarioService : IUsuarioService
 
     public async Task Add(Usuario usuario)
     {
-        string password = "P@ssw0rd"; // TO DO: Implementar gerador de codigo e enviar por email
+        string password = "123456"; // TO DO: Implementar gerador de codigo e enviar por email
         usuario.DefinirSenha(password);
         await _repository.Add(usuario);
     }

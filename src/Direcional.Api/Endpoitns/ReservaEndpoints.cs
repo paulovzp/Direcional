@@ -21,8 +21,7 @@ public static class ReservaEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status403Forbidden)
             .WithTags("Reserva")
-            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
 
         app.MapGroup("api/reserva")
             .MapGet("{id}", async ([FromRoute] int id, IReservaAppService appService) =>
@@ -36,8 +35,7 @@ public static class ReservaEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Reserva")
-            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
 
         app.MapGroup("api/reserva")
             .MapPost("", async ([FromBody] ReservaCreateRequest request, IReservaAppService appService) =>
@@ -50,8 +48,7 @@ public static class ReservaEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Reserva")
-            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
 
         app.MapGroup("api/reserva")
             .MapPost("{id}/cancelar", async ([FromRoute] int id, IReservaAppService appService) =>
@@ -65,7 +62,6 @@ public static class ReservaEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Reserva")
-            .RequireAuthorization(policy => policy.RequireRole("Corretor"))
-            ;
+            .RequireAuthorization(policy => policy.RequireRole("Corretor"));
     }
 }

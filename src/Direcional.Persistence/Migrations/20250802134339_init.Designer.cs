@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Direcional.Persistence.Migrations
 {
     [DbContext(typeof(DirecionalDbContext))]
-    [Migration("20250801113820_Init")]
-    partial class Init
+    [Migration("20250802134339_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,11 +226,6 @@ namespace Direcional.Persistence.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
 
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<string>("Tipo")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -242,6 +237,19 @@ namespace Direcional.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2024, 8, 2, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "admin@direcional.com.br",
+                            HashPassword = "6Q8lFNrM3ry1v/lnmq7SaK+eKp10mY+3Oq/3T8fcHy8=",
+                            Nome = "Administrador",
+                            Salt = "+jpUXXIe840y6q0avkrIyQ==",
+                            Tipo = "Admin",
+                            UpdatedAt = new DateTime(2024, 8, 2, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("Direcional.Domain.Venda", b =>
