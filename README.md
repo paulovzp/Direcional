@@ -43,13 +43,8 @@ cd src/Direcional.Persistence
 dotnet ef database update --project Direcional.Persistence.csproj
 ```
 
-4. **Execute a API**
-```bash
-cd src/Direcional.Api
-```
-```bash
-dotnet run
-```
+4. **Execute o projeto**
+ 
 
 ## 🚀 Testar o Projeto
 
